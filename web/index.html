@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" charset="utf-8">
+		<title>词法分析</title>
+		<link href="https://cdn.bootcss.com/semantic-ui/2.2.14/semantic.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="iconfont/iconfont.css" />
+		<style type="text/css">
+			body {
+				font-family: "微软雅黑";
+				background-color: #f7f7f7;
+			}
+			
+			textarea {
+				border-radius: 3px;
+				width: 100%;
+				padding: 12px;
+				resize: none;
+			}
+			
+			header {
+				height: 100%;
+				display: flex;
+				z-index: 10;
+				right: 0;
+				left: 0;
+				height: 44px;
+				padding-right: 10px;
+				padding-left: 10px;
+				border-bottom: 0;
+				background-color: #f7f7f7;
+			}
+			
+			h1 {
+				font-size: 17px;
+				font-weight: 500;
+				line-height: 44px;
+				position: absolute;
+				display: block;
+				width: 100%;
+				margin: 0 -10px;
+				padding: 0;
+				text-align: center;
+				white-space: nowrap;
+				color: #000;
+			}
+			
+			#tip {
+				float: right;
+			}
+			.iconfont.icon-baidu1 {
+				color: #2932E1;
+				font-size: 15px;
+				margin-right: 2px;
+			}
+		</style>
+		<script src="js/jquery-3.2.1.min.js"></script>
+		<script src="https://cdn.bootcss.com/semantic-ui/2.2.14/semantic.min.js"></script>
+		<script type="text/javascript" src="js/doT.min.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
+	</head>
+
+	<body>
+
+		<div class="full height">
+			<header>
+				<h1>词法分析</h1>
+			</header>
+			<hr/>
+			<br/>
+			<div class="ui container">
+				<p>本功能基于大数据和用户行为的分词、词性标注、命名实体识别，定位基本语言元素，消除歧义，支撑自然语言的准确理解</p>
+				<p>输入框输入一段文字，系统会对字词分类。部分字词还支持百度百科知识库链接</p>
+				<p>合作伙伴：<a href="http://ai.baidu.com/" target="_blank">百度AI</a></p>
+			</div>
+			<br/>
+			<div class="ui container">
+				<textarea name="" rows="7" cols=""></textarea>
+			</div>
+			<div class="ui container">
+				<p id="tip">当前字数0/30000字</p>
+			</div>
+			<br/>
+			<div class="ui container">
+			<button class="ui primary button lexer-search">
+				    <i class="search icon"></i>
+				搜索 </button>
+			</div>
+			<br/>
+			<div class="ui active centered inline loader"></div>
+			<div class="ui container">
+				<div class="ui grid">
+					<div class="column">
+
+					</div>
+
+				</div>
+				<script type="text/x-dot-template" id="lexer">
+					{{for(var i in it){ }}
+					<button class="ui basic button lexer-btn" style="margin-bottom: 12px;">
+						{{=it[i].name}}
+						<input value="{{=it[i].name}}"  type="hidden" class="name"/>
+						<input value="{{=it[i].ne}}"  type="hidden" class="ne"/>
+						<input value="{{=it[i].pos}}"  type="hidden" class="pos" />
+						<input value="{{=it[i].uri}}" type="hidden" class="url" />
+						<input value="{{=it[i].posChinese}}"  type="hidden" class="posChinese" />
+						<input value="{{=it[i].basic_words}}"  type="hidden" class="basic_words" />
+						<input value="{{=it[i].neChinese}}" type="hidden" class="neChinese" />
+					</button> {{ } }}
+				</script>
+			</div>
+		</div>
+		</div>
+
+
+		<div class="ui modal">
+			<i class="close icon"></i>
+			<div class="header">
+				字词详情
+			</div>
+			<div class="image content">
+				<div class="description">
+					<div class="ui header" id="tip-name"></div>
+					<p id="tip-cixing"></p>
+					<p id="tip-basic_words"></p>
+					<p id="tip-cizy"></p>
+					<p id="tip-url">百度百科知识库：<a href="www.baidu.com" target="_blank">点击这里</a></p>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>
+<script type="text/javascript">
+	$(document).ready(function() {
+		function CheckInputMax() {
+			var num = $("textarea").val().length;
+			if(num > 30000) {
+				alert("字数达到上限!");
+                $("textarea").val("");
+				$("#tip").text("当前字数" + num + "/30000字");
+				return false;
+			}
+			$("#tip").text("当前字数" + num + "/30000字");
+		}
+
+		$("textarea").change(function() {});
+		$("textarea").keyup(function() {
+			CheckInputMax();
+		});
+		$("textarea").keydown(function() {
+			CheckInputMax();
+		});
+        $("textarea").blur(function() {
+            CheckInputMax();
+        });
+        $("textarea").focus(function() {
+            CheckInputMax();
+        });
+	});
+</script>
