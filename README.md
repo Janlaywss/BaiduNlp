@@ -8,3 +8,5 @@
 *对文言文解析不完美。解析模式将按照现代汉语言标准进行解析
 
 项目路径：http://www.janlay.cn/nlp/
+
+前台HTML5 后台JavaWeb
